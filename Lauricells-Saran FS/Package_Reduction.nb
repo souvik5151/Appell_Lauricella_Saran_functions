@@ -10,16 +10,29 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     43377,       1062]
-NotebookOptionsPosition[     42062,       1029]
-NotebookOutlinePosition[     42762,       1052]
-CellTagsIndexPosition[     42719,       1049]
+NotebookDataLength[     43896,       1079]
+NotebookOptionsPosition[     42488,       1045]
+NotebookOutlinePosition[     43188,       1068]
+CellTagsIndexPosition[     43145,       1065]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
+Cell[TextData[{
+ "In this notebook we test the ",
+ StyleBox["package",
+  FontWeight->"Bold"],
+ " against the ",
+ StyleBox["reduction formula",
+  FontWeight->"Bold"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.918441849821588*^9, 
+  3.918441879881763*^9}},ExpressionUUID->"bce297f8-632e-448a-8f8c-\
+29e41f4a8ce1"],
 
 Cell[CellGroupData[{
+
 Cell[BoxData[
  RowBox[{"<<", "LauricellaFS.wl"}]], "Input",
  CellChangeTimes->{{3.910501761348228*^9, 3.910501766083973*^9}, {
@@ -62,14 +75,17 @@ In[3]:=",ExpressionUUID->"4d557a32-8316-444c-8854-37dd2809025c"]
 }, Open  ]],
 
 Cell[TextData[{
- "The following is the reduction formula, ",
- StyleBox["Eq.(53).\n(x,y) ",
+ "The following is the reduction formula that we use, ",
+ StyleBox["Eq.(53)",
+  FontWeight->"Bold"],
+ " of the paper",
+ StyleBox[".\n(x,y) ",
   FontWeight->"Bold"],
  " are chosen at random"
 }], "Text",
  CellChangeTimes->{{3.918440979150757*^9, 3.9184410051483192`*^9}, {
-  3.918441040659719*^9, 
-  3.918441050046605*^9}},ExpressionUUID->"065d4aab-3ab7-4140-ba1b-\
+  3.918441040659719*^9, 3.918441050046605*^9}, {3.9184418392665653`*^9, 
+  3.918441871711891*^9}},ExpressionUUID->"065d4aab-3ab7-4140-ba1b-\
 d0c45cf10339"],
 
 Cell[BoxData[{
@@ -1051,18 +1067,19 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
+Cell[558, 20, 308, 11, 35, "Text",ExpressionUUID->"bce297f8-632e-448a-8f8c-29e41f4a8ce1"],
 Cell[CellGroupData[{
-Cell[580, 22, 379, 6, 30, "Input",ExpressionUUID->"7f302a3a-52ec-4162-9471-f85bdfb5aadb"],
+Cell[891, 35, 379, 6, 30, "Input",ExpressionUUID->"7f302a3a-52ec-4162-9471-f85bdfb5aadb"],
 Cell[CellGroupData[{
-Cell[984, 32, 659, 13, 44, "Print",ExpressionUUID->"a1bdc76b-9158-44ff-ae26-d54c84bb4223"],
-Cell[1646, 47, 647, 12, 44, "Print",ExpressionUUID->"4d557a32-8316-444c-8854-37dd2809025c"]
+Cell[1295, 45, 659, 13, 44, "Print",ExpressionUUID->"a1bdc76b-9158-44ff-ae26-d54c84bb4223"],
+Cell[1957, 60, 647, 12, 44, "Print",ExpressionUUID->"4d557a32-8316-444c-8854-37dd2809025c"]
 }, Open  ]]
 }, Open  ]],
-Cell[2320, 63, 327, 9, 58, "Text",ExpressionUUID->"065d4aab-3ab7-4140-ba1b-d0c45cf10339"],
-Cell[2650, 74, 1755, 56, 71, "Input",ExpressionUUID->"abd829c9-7f30-4475-9e7b-a2546845b276"],
+Cell[2631, 76, 442, 12, 58, "Text",ExpressionUUID->"065d4aab-3ab7-4140-ba1b-d0c45cf10339"],
+Cell[3076, 90, 1755, 56, 71, "Input",ExpressionUUID->"abd829c9-7f30-4475-9e7b-a2546845b276"],
 Cell[CellGroupData[{
-Cell[4430, 134, 3332, 75, 283, "Input",ExpressionUUID->"74c501f6-9aa4-479e-a7ea-72b679c1beb0"],
-Cell[7765, 211, 34281, 815, 1147, "Output",ExpressionUUID->"8a15f866-278b-4cbb-ae00-283fb7f09da8"]
+Cell[4856, 150, 3332, 75, 283, "Input",ExpressionUUID->"74c501f6-9aa4-479e-a7ea-72b679c1beb0"],
+Cell[8191, 227, 34281, 815, 1147, "Output",ExpressionUUID->"8a15f866-278b-4cbb-ae00-283fb7f09da8"]
 }, Open  ]]
 }
 ]
