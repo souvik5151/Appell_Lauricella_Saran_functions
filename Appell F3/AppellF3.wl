@@ -3,34 +3,34 @@
 BeginPackage["F3`"]
 
 
-Print["AppellF3.wl v1.0\n","Authors : Souvik Bera & Tanay Pathak"];
+Print["AppellF3.wl v1.0\n","Authors : Souvik Bera & Tanay Pathak\n","Last modified : 03.03.2024"
+];
 
 
-(*12/02/2024 :: conditions for logarithmic situations are added in F3 and F3evaluate commands*)
-(*14/02/2024 :: AppellF3log4 is based on the old prescription of finding the best series*)
-(*14/02/2024 :: in AppellF3log5 the coode is written clearly. The old prescription is used*)
-
-
-F3::usage="The command gives the numerical value of the Appell Function F2.
- F3[a1,a2,b1,b2,c,x,y,digits to display,terms, verbose-> True]";
-F3ROC::usage="The command gives the region of convergence (ROC) of the series along with the given point
- F3ROC[{x,y},series_number,{plot range}]";
+F3::usage="The command gives the numerical value of the Appell F3.
+ F3[a1, a2, b1, b2, c, x, y, precision, terms, verbose-> True]";
+F3ROC::usage="The command gives the region of convergence (ROC) of the analytic continuation along with the given point
+ F3ROC[{x,y}, analytic_continuation_number, {plot range}]";
 F3findall::usage="The command finds all the analytic continuations that are valid for the given point
  F3findall[{x,y}]";
-F3evaluate::usage="The command gives the value of the series at a given point and Pochhammer parameters
- F3evaluate[series_number,{a,b1,b2,c1,c2,x,y}, precision, terms]";
-F3expose::usage="The command exposes the region of convergence (ROC) and the expression of the analytic continuation of F2[a,b1,b2,c1,c2,x,y,m,n]
+F3evaluate::usage="The command gives the value of F3 at a given point and Pochhammer parameters with a chosen analytic continuation
+ F3evaluate[series_number, {a1, a2, b1, b2, c, x, y}, precision, terms]";
+F3expose::usage="The command exposes the region of convergence (ROC) and the expression of the analytic continuation of F3[a1, a2, b1, b2, c, x, y, m, n]
  F3expose[series_number]";
 
 
 Begin["`Private`"]
 
 
+Off[General::infy,General::indet,General::munfl,General::stop ];
+ParallelEvaluate[Off[General::infy,General::indet,General::munfl,General::stop ]];
+
+
 F3expose[list_]:=Module[{i},
-If[list[[1]]>24,Print["Total number of ACs is 24"];Abort[];];
+If[list>24,Print["Total number of ACs is 24"];Abort[];];
 ClearAll[Global`x,Global`y,Global`a1,Global`a2,Global`b1,Global`b2,Global`c,Global`m,Global`m];
-Return[{F3serieswsum[Global`a1,Global`a2,Global`b1,Global`b2,Global`c,Global`x,Global`y,Global`m,Global`n][[list[[1]],1]],
-F3serieswsum[Global`a1,Global`a2,Global`b1,Global`b2,Global`c,Global`x,Global`y,Global`m,Global`n][[list[[1]],2]](*/.Gamma[x_. +1]-> x Gamma[x]*)/.Re[x_]-> x (*//Simplify//Expand*)}]];
+Return[{F3serieswsum[Global`a1,Global`a2,Global`b1,Global`b2,Global`c,Global`x,Global`y,Global`m,Global`n][[list,1]],
+F3serieswsum[Global`a1,Global`a2,Global`b1,Global`b2,Global`c,Global`x,Global`y,Global`m,Global`n][[list,2]](*/.Gamma[x_. +1]-> x Gamma[x]*)/.Re[x_]-> x (*//Simplify//Expand*)}]];
 
 
 
@@ -198,12 +198,7 @@ pos1=Flatten[Position[test1,True]];
 
 If[pos1==={},Message[F3::val];Abort[];];
 
-
-
-
-
-
-
+If[OptionValue[verbose],Print["valid series : ",pos1]];
 
 
 (*Selecting the best series based on the convergence rate*)
@@ -232,7 +227,8 @@ pos2 = seriesselect[[1,2]];
 
 
 
-(*Print["selected series : ",pos2];*)
+
+If[OptionValue[verbose],Print["selected series : ",pos2]];
 
 PrintTemporary["Evaluating sum..."];
 
@@ -255,7 +251,7 @@ result=ParallelSum[seriesac[m11],{m11,0,terms}];
 
 Label[end];
 Return[Chop[Total[{1,I}*(SetPrecision[#,p]&/@ReIm[result])]]]
-(*Return[SetPrecision[Chop[result],p]]*)
+
 ]
 
 
