@@ -3,35 +3,17 @@
 BeginPackage["LauricellaFD`"]
 
 
-(*it contains 102 series obtained after RUN5*)
+Print["LauricellaFD.wl v1.0\n","Authors : Souvik Bera & Tanay Pathak\n","Last modified : 03.03.2024"];
 
 
-Print["LauricellaFD.wl v1.0\n","Authors : Souvik Bera & Tanay Pathak"];
-
-(*
-Add the following things : 
-1. Call F1 and F3 and add the codes when two of the arguments are zero
-2. Add condition when the package is not valid
-3. Delete FSROC
-
-*)
-
-(*
-15/02/2024 :: Log conditions are added
-*)
-
-
-FD3::usage="The command gives the numerical value of the Lauricella Function FS in three variables.
-FD3[a,b1, b2,b3, c, x, y, z, precision_Integer,terms_Integer, verbose-> True]";
+FD3::usage="The command gives the numerical value of the Lauricella FD in three variables.
+FD3[a, b1, b2, b3, c, x, y, z, precision, terms, verbose-> True]";
 FD3findall::usage="The command finds all the analytic continuations that are valid for the given point
  FD3findall[{x,y,z}]";
-FD3evaluate::usage="The command gives the value of the series at a given point and Pochhammer parameters
- FD3evaluate[series_number,{a,b1, b2,b3, c, x, y, z}, precision_Integer, terms_Integer]";
-FD3expose::usage="The command exposes the domain of convergence and the expression of the analytic continuation of FD[a,b1, b2,b3, c, x, y, z,m,n]
+FD3evaluate::usage="The command gives the value of FD at a given point and Pochhammer parameters with a chosen analytic continuation
+ FD3evaluate[series_number,{a, b1, b2, b3, c, x, y, z}, precision, terms]";
+FD3expose::usage="The command exposes the domain of convergence and the expression of the analytic continuation of FD[a, b1, b2, b3, c, x, y, z, m, n, p]
  FD3expose[series_number]";
- 
- (*FD3ROC::usage="The command gives the domain of convergence of the series along with the given point
- FD3ROC[{x,y,z},series_number,{plot range}]";*)
 
 
 Begin["`Private`"]
@@ -40,8 +22,8 @@ Begin["`Private`"]
 Get["AppellF1.wl"];
 
 
-Off[General::infy,General::indet];
-ParallelEvaluate[Off[General::infy,General::indet]];
+Off[General::infy,General::indet,General::munfl,General::stop ];
+ParallelEvaluate[Off[General::infy,General::indet,General::munfl,General::stop ]];
 
 
 (*it exposes the three variable series*)
@@ -92,14 +74,18 @@ If[x0===0.0||x0===0, result=F1[a0,b20,b30,c0,y0,z0,p,terms];Goto[end];];
 If[y0===0.0||y0===0, result=F1[a0,b10,b30,c0,x0,z0,p,terms];Goto[end];];
 If[z0===0.0||z0===0, result=F1[a0,b10,b20,c0,x0,y0,p,terms];Goto[end];];
 
+If[x0===1||x0===1., result= Hypergeometric2F1[a0,b10,c0,1] F1[a0,b20,b30,c0-b10,y0,z0,p,terms];Goto[end];];
+If[y0===1||y0===1., result= Hypergeometric2F1[a0,b20,c0,1] F1[a0,b10,b30,c0-b20,x0,z0,p,terms];Goto[end];];
+If[z0===1||z0===1., result= Hypergeometric2F1[a0,b30,c0,1] F1[a0,b10,b20,c0-b30,x0,y0,p,terms];Goto[end];];
 
-(* When two arguments are *)
+(* When two arguments are zero -- No need *)
 If[And[x0===0.0||x0===0,y0===0.0||y0===0],result=Hypergeometric2F1[a0,b30,c0,z0];Goto[end];];
 If[And[y0===0.0||y0===0,z0===0.0||z0===0],result=Hypergeometric2F1[a0,b10,c0,x0];Goto[end];];
 If[And[z0===0.0||z0===0,x0===0.0||x0===0],result=Hypergeometric2F1[a0,b20,c0,y0];Goto[end];];
 
-(* When all the arguments are zero*)
+(* When all the arguments are zero -- No need*)
 If[And[z0===0.0||z0===0,x0===0.0||x0===0,y0===0.0||y0===0],result=1;Goto[end];];
+
 
 
 
@@ -214,11 +200,11 @@ eps= SetPrecision[ 10^(-p) I,peps];
 
 roc[{x_,y_,z_}]=FD2sum[{a,b1, b2,b3, c, x, y,z},m,n][[All,1]];
 
-(*acs[{a_,b1_, b2_,b3_, c_, x_, y_,z_},m_,n_]=FD2sum[{a,b1, b2,b3, c, x, y,z},m,n][[All,2]];*)
+
 
 
 If[Length[para]=!=8,Abort[];];
-(*{a1,a2,b1, b2,b3, c, x, y, z}=SetPrecision[para,p0];*)
+
 
 
 If[roc[Rationalize/@(para[[-3;;-1]])][[list]],{},Print["The point does not lie in ", list];Abort[];];
@@ -231,14 +217,6 @@ result = N[ParallelSum[selectedseries[m,n],{m,0,terms},{n,0,m}],p0];
 
 
 Return[Chop[Total[{1,I}*(SetPrecision[#,p]&/@ReIm[result])]]]]
-
-
-(* may be No needed *)
-
-(*FD3ROC[point___List,list_/;(IntegerQ[list]&&list>0),range_List]:=Module[{i},
-Show[ListPlot[{point},PlotStyle->Directive[PointSize[Medium],Red],PlotRange->{{range[[1]],range[[2]]},{range[[1]],range[[2]]}}],
-RegionPlot[Subscript[Roc,list][x,y],{x,range[[1]]-1,range[[2]]+1},{y,range[[1]]-1,range[[2]]+1},PlotPoints->100],PlotRange->{{range[[1]],range[[2]]},{range[[1]],range[[2]]}},AspectRatio-> 1]
-]*)
 
 
 Options[FD3]={verbose->False};
@@ -277,6 +255,15 @@ If[x0===0.0||x0===0, result=F1[a0,b20,b30,c0,y0,z0,p,terms];Goto[end];];
 If[y0===0.0||y0===0, result=F1[a0,b10,b30,c0,x0,z0,p,terms];Goto[end];];
 If[z0===0.0||z0===0, result=F1[a0,b10,b20,c0,x0,y0,p,terms];Goto[end];];
 
+(*when arguments are 1*)
+If[x0===1||x0===1., If[OptionValue[verbose],PrintTemporary["Evaluating with reduction formula..."];,Nothing[]];
+result= Hypergeometric2F1[a0,b10,c0,1] F1[a0,b20,b30,c0-b10,y0,z0,p,terms];Goto[end];];
+
+If[y0===1||y0===1., If[OptionValue[verbose],PrintTemporary["Evaluating with reduction formula..."];,Nothing[]];
+result= Hypergeometric2F1[a0,b20,c0,1] F1[a0,b10,b30,c0-b20,x0,z0,p,terms];Goto[end];];
+
+If[z0===1||z0===1., If[OptionValue[verbose],PrintTemporary["Evaluating with reduction formula..."];,Nothing[]];
+result= Hypergeometric2F1[a0,b30,c0,1] F1[a0,b10,b20,c0-b30,x0,y0,p,terms];Goto[end];];
 
 (* When two arguments are *)
 If[And[x0===0.0||x0===0,y0===0.0||y0===0],result=Hypergeometric2F1[a0,b30,c0,z0];Goto[end];];
@@ -285,6 +272,18 @@ If[And[z0===0.0||z0===0,x0===0.0||x0===0],result=Hypergeometric2F1[a0,b20,c0,y0]
 
 (* When all the arguments are zero*)
 If[And[z0===0.0||z0===0,x0===0.0||x0===0,y0===0.0||y0===0],result=1;Goto[end];];
+
+
+(*Reduction formula when x = y = z*)
+If[x0===y0, If[OptionValue[verbose],PrintTemporary["Evaluating with reduction formula..."];,Nothing[]];
+result = F1[a0,b10+b20,b30,c0,y0,z0,p,terms,If[OptionValue[verbose],verbose-> True,Nothing[]]];Goto[end];];
+
+If[x0===z0, If[OptionValue[verbose],PrintTemporary["Evaluating with reduction formula..."];,Nothing[]];
+result = F1[a0,b10+b30,b20,c0,x0,y0,p,terms,If[OptionValue[verbose],verbose-> True,Nothing[]]];Goto[end];];
+
+If[y0===z0, If[OptionValue[verbose],PrintTemporary["Evaluating with reduction formula..."];,Nothing[]];
+result = F1[a0,b10,b20+b30,c0,x0,y0,p,terms,If[OptionValue[verbose],verbose-> True,Nothing[]]];Goto[end];];
+
 
 
 
@@ -401,10 +400,7 @@ eps= SetPrecision[ 10^(-p) I,peps];
 parameters = SetPrecision[{a,b1, b2,b3, c, x, y,z},p0];
 
 (* check the region *)
-(*roc[{x_,y_,z_}]=FD2sum[{a,b1, b2,b3, c, x, y,z},m,n][[All,1]];
-acs[{a_,b1_, b2_,b3_, c_, x_, y_,z_},m_,n_]=FD2sum[{a,b1, b2,b3, c, x, y,z},m,n][[All,2]];
 
-test1=roc[parameters[[-3;;-1]]];*)
 
 test1 = FD2sum[{a,b1, b2,b3, c, x, y,z},m,n][[All,1]];
 
@@ -445,10 +441,7 @@ If[OptionValue[verbose]===True,Print["convergence rates :",{N[#[[1]],10],#[[2]]}
 pos2=seriesselect[[1,2]];
 
 
-(*For[i=1,i<= Length[test2],i++,
-pos2=seriesselect[[i,2]];
-If[MemberQ[{"0","Indeterminate"},ToString[Sum[acs[{a,b1, b2,b3, c, x, y,z},m,n][[pos2]],{m,0,1},{n,0,m}]]],Continue[],Break[]];];
-*)
+
 
 
 If[OptionValue[verbose]===True,
