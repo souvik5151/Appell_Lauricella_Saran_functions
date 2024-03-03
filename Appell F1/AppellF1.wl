@@ -3,26 +3,27 @@
 BeginPackage["F1`"]
 
 
-Print["AppellF1.wl v1.0\n","Authors : Souvik Bera & Tanay Pathak"];
-
-(*
-12/02/2024 : Log conditions are added in F1 and F1evaluate commands
-*)
+Print["AppellF1.wl v1.0\n","Authors : Souvik Bera & Tanay Pathak\n",
+"Last modified : 03.03.2024"];
 
 
-F1::usage="The command gives the numerical value of the Appell Function F1.
- F1[a, b1, b2, c, x, y,precision,terms, verbose-> True]";
-F1ROC::usage="The command gives the region of convergence (ROC) of the series along with the given point
- F1ROC[{x,y},series_number,{plot range}]";
+F1::usage="The command gives the numerical value of the Appell F1.
+ F1[a, b1, b2, c, x, y, precision, terms, verbose-> True]";
+F1ROC::usage="The command gives the region of convergence (ROC) of the analytic continuation along with the given point
+ F1ROC[{x,y}, analytic_continuation_number,{plot range}]";
 F1findall::usage="The command finds all the analytic continuations that are valid for the given point
  F1findall[{x,y}]";
-F1evaluate::usage="The command gives the value of the series at a given point and Pochhammer parameters
+F1evaluate::usage="The command gives the value of F1 at a given point and Pochhammer parameters with a chosen analytic continuation
  F1evaluate[series_number,{a, b1, b2, c, x, y}, precision, terms]";
 F1expose::usage="The command exposes the region of convergence (ROC) and the expression of the analytic continuation of F1[a, b1, b2, c, x, y , m , n]
  F1expose[series_number]";
 
 
 Begin["`Private`"]
+
+
+Off[General::infy,General::indet,General::munfl,General::stop ];
+ParallelEvaluate[Off[General::infy,General::indet,General::munfl,General::stop ]];
 
 
 F1expose[list_]:=Module[{i},
@@ -46,9 +47,10 @@ Return[Flatten[pos]];
 
 F1evaluate::singular="F1 is singular";
 F1evaluate[list_/;(IntegerQ[list]&&list>0), para_List, p_,terms_]:=Module[
-{m,a, b1, b2, c, x, y,result,p0,roc,acs,selectedseries,eps,peps,m1},
+{m,a, b1, b2, c, x, y,result,p0,roc,acs,selectedseries,eps,peps,m1,
+a0,b0,c0,d0,x0,y0},
 $MaxExtraPrecision=1000;
-
+ParallelEvaluate[$MaxExtraPrecision=1000];
 
 p0= 10 p;
 peps= 5p;
@@ -58,24 +60,46 @@ If[Or@@((IntegerQ[#]&&#<=0)&/@(para[[-3;;-3]])),
 Message[F1evaluate::singular];Abort[];];
 
 
-(* If x=0 or y=0*)
 
-If[para[[-2]]===0.0||para[[-2]]===0,result=Hypergeometric2F1[para[[1]],para[[3]],para[[4]],para[[-1]]];Goto[end];];
-If[para[[-1]]===0.0||para[[-1]]===0,result=Hypergeometric2F1[para[[1]],para[[2]],para[[4]],para[[-2]]];Goto[end];];
+(* If x=0 or y=0*)
+{a0,b0,c0,d0,x0,y0}=para;
+If[x0===0.0||x0===0,result=Hypergeometric2F1[a0,c0,d0,y0];Goto[end];];
+If[y0===0.0||y0===0,result=Hypergeometric2F1[a0,b0,d0,x0];Goto[end];];
+
+If[x0===1||x0===1., If[OptionValue[verbose],PrintTemporary["Evaluating with reduction formula..."];,Nothing[]];
+result = Hypergeometric2F1[a0,b0,d0,1] Hypergeometric2F1[a0,c0,-b0+d0,y0];Goto[end];];
+If[y0===1||y0===1., If[OptionValue[verbose],PrintTemporary["Evaluating with reduction formula..."];,Nothing[]];
+result = Hypergeometric2F1[a0,b0,-c0+d0,x0] Hypergeometric2F1[a0,c0,d0,1];Goto[end];];
+
+(*reduction formula*)
+If[x0===y0, If[OptionValue[verbose],PrintTemporary["Evaluating with reduction formula..."];,Nothing[]];
+result = Hypergeometric2F1[a0, b0 + c0, d0, x0];Goto[end];];
 
 
 {a,b1,b2,c,x,y}=SetPrecision[para,p0];
 
 (*Log conditions*)
-If[IntegerQ[para[[1]]],a=para[[1]]-eps/3];
-If[IntegerQ[para[[2]]],b1=para[[2]]+eps/5];
-If[IntegerQ[para[[3]]],b2=para[[3]]-eps/7];
-If[IntegerQ[para[[4]]],c=para[[4]]+eps/11];
+If[IntegerQ[para[[1]]],a=para[[1]]-eps/2];
+If[IntegerQ[para[[2]]],b1=para[[2]]-eps/3];
+If[IntegerQ[para[[3]]],b2=para[[3]]+eps/5];
+
+If[IntegerQ[-para[[1]]+para[[4]]],c=para[[4]]-eps/7];
+If[IntegerQ[para[[1]]-para[[2]]],a=para[[1]]-eps/2];
+If[IntegerQ[para[[1]]-para[[3]]],a=para[[1]]-eps/2];
+If[IntegerQ[-para[[2]]+para[[4]]],b1=para[[2]]-eps/3];
+If[IntegerQ[-para[[3]]+para[[4]]],b2=para[[3]]+eps/5];
+
+If[IntegerQ[para[[1]]-para[[2]]-para[[3]]],a=para[[1]]-eps/2];
+If[IntegerQ[-para[[2]]-para[[3]]+para[[4]]],c=para[[4]]-eps/7];
+If[IntegerQ[para[[1]]+para[[2]]-para[[4]]],c=para[[4]]-eps/7];
+If[IntegerQ[para[[1]]+para[[3]]-para[[4]]],c=para[[4]]-eps/7];
+
+If[IntegerQ[para[[1]]+para[[2]]+para[[3]]-para[[4]]],c=para[[4]]-eps/7];
 
 
 
 
- eps= SetPrecision[ 10^(-p)I ,peps];
+ eps= SetPrecision[ 10^(-p) I,peps];
  result=0;
 
 
@@ -137,15 +161,30 @@ If[Or@@((IntegerQ[#]&&#<=0)&/@{d0}),Message[F1::singular];Abort[];];
 
 If[x0===0.0||x0===0,result=Hypergeometric2F1[a0,c0,d0,y0];Goto[end];];
 If[y0===0.0||y0===0,result=Hypergeometric2F1[a0,b0,d0,x0];Goto[end];];
+If[x0===y0, result = Hypergeometric2F1[a0, b0 + c0, d0, x0];Goto[end];];
+If[x0===1||x0===1., result = Hypergeometric2F1[a0,b0,d0,1] Hypergeometric2F1[a0,c0,-b0+d0,y0];Goto[end];];
+If[y0===1||y0===1., result = Hypergeometric2F1[a0,b0,-c0+d0,x0] Hypergeometric2F1[a0,c0,d0,1];Goto[end];];
 
 
 {a,b1,b2,c,x,y}=SetPrecision[{a0,b0,c0,d0,x0,y0},p0];
 
 (*Log conditions*)
-If[IntegerQ[a0],a=a0-eps/3];
-If[IntegerQ[b0],b1=b0+eps/5];
-If[IntegerQ[c0],b2=c0-eps/7];
-If[IntegerQ[d0],c=d0+eps/11];
+If[IntegerQ[a0],a=a0-eps/2];
+If[IntegerQ[b0],b1=b0-eps/3];
+If[IntegerQ[c0],b2=c0+eps/5];
+
+If[IntegerQ[-a0+d0],c=d0-eps/7];
+If[IntegerQ[a0-b0],a=a0-eps/2];
+If[IntegerQ[a0-c0],a=a0-eps/2];
+If[IntegerQ[-b0+d0],b1=b0-eps/3];
+If[IntegerQ[-c0+d0],b2=c0+eps/5];
+
+If[IntegerQ[a0-b0-c0],a=a0-eps/2];
+If[IntegerQ[-b0-c0+d0],c=d0-eps/7];
+If[IntegerQ[a0+b0-d0],c=d0-eps/7];
+If[IntegerQ[a0+c0-d0],c=d0-eps/7];
+
+If[IntegerQ[a0+b0+c0-d0],c=d0-eps/7];
 
 
 
@@ -184,11 +223,7 @@ If[OptionValue[verbose],Print["convergence rates :",{N[#[[1]],10],#[[2]]}&/@seri
 pos2=seriesselect[[1]][[2]];
 
 
-(*log conditions are added. No need to include these commands*)
-(*For[i=1,i<= Length[test2],i++,
-pos2=seriesselect[[i]][[2]];
-If[MemberQ[{"0","Indeterminate"},
-ToString[Sum[acs[{a, b1, b2, c, x, y},m],{m,0,1}]]],Continue[],Break[]];];*)
+
 
 
 If[OptionValue[verbose],Print["selected series : ",pos2]];
@@ -197,14 +232,14 @@ PrintTemporary["Evaluating sum..."];
 
 
 selectedseries[m_]=F1seriesas2F1ifelse[{a, b1, b2, c, x, y},m][[pos2,2]]; 
-DistributeDefinitions[terms,p,parameters,p0];
+DistributeDefinitions[terms,m,selectedseries,p0];
 result = N[ParallelSum[selectedseries[m],{m,0,terms}],p0];
 
 
 
 Label[end];
 Return[Chop[Total[{1,I}*(SetPrecision[#,p]&/@ReIm[result])]]]
-(*Return[SetPrecision[Chop[result],p]]*)
+
 ]
 
 
