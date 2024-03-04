@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    111274,       2677]
-NotebookOptionsPosition[    110314,       2651]
-NotebookOutlinePosition[    110748,       2668]
-CellTagsIndexPosition[    110705,       2665]
+NotebookDataLength[    111671,       2690]
+NotebookOptionsPosition[    110710,       2664]
+NotebookOutlinePosition[    111144,       2681]
+CellTagsIndexPosition[    111101,       2678]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -30,8 +30,11 @@ Cell[BoxData[
 Cell[BoxData[
  InterpretationBox[
   RowBox[{"\<\"AppellF1.wl v1.0\\n\"\>", 
-   "\[InvisibleSpace]", "\<\"Authors : Souvik Bera & Tanay Pathak\"\>"}],
-  SequenceForm["AppellF1.wl v1.0\n", "Authors : Souvik Bera & Tanay Pathak"],
+   "\[InvisibleSpace]", "\<\"Authors : Souvik Bera & Tanay Pathak\\n\"\>", 
+   "\[InvisibleSpace]", "\<\"Last modified : 03.03.2024\"\>"}],
+  SequenceForm[
+  "AppellF1.wl v1.0\n", "Authors : Souvik Bera & Tanay Pathak\n", 
+   "Last modified : 03.03.2024"],
   Editable->False]], "Print",
  CellChangeTimes->{
   3.910523845532682*^9, 3.9105239358901052`*^9, 3.910524107971315*^9, 
@@ -46,10 +49,11 @@ Cell[BoxData[
    3.910657415406938*^9, {3.9106581189674*^9, 3.910658193696621*^9}, 
    3.910659438928514*^9, 3.910948767243058*^9, 3.9109490112779007`*^9, 
    3.910950077941386*^9, 3.915694460512724*^9, 3.915694753031602*^9, 
-   3.915703981391629*^9, 3.916990366016721*^9, 3.9169930149972887`*^9},
+   3.915703981391629*^9, 3.916990366016721*^9, 3.9169930149972887`*^9, 
+   3.918520248581799*^9},
  CellLabel->
   "During evaluation of \
-In[2]:=",ExpressionUUID->"0b734e71-2434-4d7e-baa1-76a37fd722a2"]
+In[2]:=",ExpressionUUID->"09015746-b657-48e4-8863-b4b1f1c60346"]
 }, Open  ]],
 
 Cell[TextData[{
@@ -61,10 +65,19 @@ internal ",
 constrained of ",
  StyleBox["15s",
   FontWeight->"Bold"],
- ", which is the typical time taken for these evluations."
+ ", which is the typical time taken for these evaluations.\nThe values of ",
+ StyleBox["x",
+  FontWeight->"Bold"],
+ " and ",
+ StyleBox["y ",
+  FontWeight->"Bold"],
+ "are chosen at random. ",
+ StyleBox["Running the file again will change the values.",
+  FontWeight->"Bold"]
 }], "Text",
- CellChangeTimes->{{3.91839189801307*^9, 
-  3.9183919807638807`*^9}},ExpressionUUID->"3f2eaacd-a6b1-4437-82a0-\
+ CellChangeTimes->{{3.91839189801307*^9, 3.9183919807638807`*^9}, {
+  3.918520253706284*^9, 
+  3.9185202658861427`*^9}},ExpressionUUID->"3f2eaacd-a6b1-4437-82a0-\
 5c2e6307c98a"],
 
 Cell[CellGroupData[{
@@ -2669,14 +2682,14 @@ CellTagsIndex->{}
 Notebook[{
 Cell[CellGroupData[{
 Cell[580, 22, 351, 5, 30, "Input",ExpressionUUID->"6812a6b7-5896-46ad-bbed-15beeb922e39"],
-Cell[934, 29, 1319, 22, 44, "Print",ExpressionUUID->"0b734e71-2434-4d7e-baa1-76a37fd722a2"]
+Cell[934, 29, 1450, 26, 63, "Print",ExpressionUUID->"09015746-b657-48e4-8863-b4b1f1c60346"]
 }, Open  ]],
-Cell[2268, 54, 481, 13, 58, "Text",ExpressionUUID->"3f2eaacd-a6b1-4437-82a0-5c2e6307c98a"],
+Cell[2399, 58, 746, 22, 81, "Text",ExpressionUUID->"3f2eaacd-a6b1-4437-82a0-5c2e6307c98a"],
 Cell[CellGroupData[{
-Cell[2774, 71, 214, 4, 67, "Section",ExpressionUUID->"148b7d65-de51-4c92-a008-6b8e3ea80ffd"],
+Cell[3170, 84, 214, 4, 67, "Section",ExpressionUUID->"148b7d65-de51-4c92-a008-6b8e3ea80ffd"],
 Cell[CellGroupData[{
-Cell[3013, 79, 6929, 131, 304, "Input",ExpressionUUID->"8f860227-a970-4ba6-a311-487882addbdf"],
-Cell[9945, 212, 100341, 2435, 4197, "Output",ExpressionUUID->"46cebe6c-55ea-4ac9-a699-6bc4b8ded8c5"]
+Cell[3409, 92, 6929, 131, 304, "Input",ExpressionUUID->"8f860227-a970-4ba6-a311-487882addbdf"],
+Cell[10341, 225, 100341, 2435, 4197, "Output",ExpressionUUID->"46cebe6c-55ea-4ac9-a699-6bc4b8ded8c5"]
 }, Open  ]]
 }, Open  ]]
 }
