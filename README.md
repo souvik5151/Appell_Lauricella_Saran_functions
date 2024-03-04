@@ -19,7 +19,7 @@ This package has the following five commands:
 4) ```F1evaluate```
 5) ```F1ROC```
 
-To be noted that the last command and ```F3EOC``` are only available in ```AppellF1.wl``` and ```AppellF3.wl``` packages respectively. 
+To be noted that the last command and ```F3ROC``` are only available in ```AppellF1.wl``` and ```AppellF3.wl``` packages respectively. 
 
 A detailed demonstration of the packages is presented in the paper. 
 
