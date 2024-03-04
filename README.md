@@ -1,6 +1,6 @@
 # Appell_Lauricella_Functions
 
-The repository contains four Mathematica packages: ```AppellF1.wl```, ```AppellF3.wl```, ``` LauricellaFD.wl``` and ```LauricellaSaranFS.wl```. These can be used to find the numerical values of the Appell $F_1$, $F_3$, Lauricella $F_D^{(3)}$ and Lauricella-Saran $F_S^{(3)$ functions for real values of variables. The work is based on the following work: 
+The repository contains four Mathematica packages: ```AppellF1.wl```, ```AppellF3.wl```, ``` LauricellaFD.wl``` and ```LauricellaSaranFS.wl```. These can be used to find the numerical values of the Appell $F_1$, $F_3$, Lauricella $F_D^{(3)}$ and Lauricella-Saran $F_S^{(3)}$ functions for real values of variables. The work is based on the following work: 
 
 Analytic continuations and numerical evaluation of Appell $F_1$, $F_3$, Lauricella $F_D^{(3)}$ and Lauricella-Saran $F_S^{(3)}$.
 
