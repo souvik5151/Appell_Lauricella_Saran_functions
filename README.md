@@ -6,7 +6,7 @@ Analytic continuations and numerical evaluation of Appell $F_1$, $F_3$, Lauricel
 
 Installation
 
-After setting the path, The packages can be called using the following command. We only show the demonstration for *AppellF1.wl* package. All the other packages are similar.
+After setting the path, The packages can be called using the following command. We only show the demonstration for ```AppellF1.wl``` package. All the other packages are similar.
 
 ```
 <<AppellF1.wl
@@ -19,8 +19,8 @@ The package has the following five commands:
 4) ```F1evaluate```
 5) ```F1ROC```
 
-To be noted that the last command is only available in *AppellF1.wl* and *AppellF3.wl* packages. 
+To be noted that the last command is only available in ```AppellF1.wl``` and ```AppellF3.wl``` packages. 
 
 A detailed demonstration of the packages is presented in the paper. 
 
-The repository along with the packages also contains various test files used for the testing of the packages via various other means. 
+The repository along with the packages, also contains various test files used for the testing of the packages via various other means. 
