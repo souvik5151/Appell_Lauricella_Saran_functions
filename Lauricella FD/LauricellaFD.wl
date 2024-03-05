@@ -68,7 +68,7 @@ result=0;
 
 
 
-(* When one argument is zero *)
+(*(* When one argument is zero *)
 
 If[x0===0.0||x0===0, result=F1[a0,b20,b30,c0,y0,z0,p,terms];Goto[end];];
 If[y0===0.0||y0===0, result=F1[a0,b10,b30,c0,x0,z0,p,terms];Goto[end];];
@@ -86,7 +86,7 @@ If[And[z0===0.0||z0===0,x0===0.0||x0===0],result=Hypergeometric2F1[a0,b20,c0,y0]
 (* When all the arguments are zero -- No need*)
 If[And[z0===0.0||z0===0,x0===0.0||x0===0,y0===0.0||y0===0],result=1;Goto[end];];
 
-
+*)
 
 
 If[IntegerQ[a],a=a-1/2 eps];
