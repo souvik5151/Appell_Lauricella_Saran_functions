@@ -69,7 +69,7 @@ If[Or@@((IntegerQ[#]&&#<=0)&/@(para[[-4;;-4]])),Message[FS3evaluate::singular];A
 result=0;
 
 
-
+(*
 (* When one of the arguments is zero*)
 
 If[x0===0.0||x0===0, result=F1[a20,b20,b30,c0,y0,z0,p,terms];Goto[end];];
@@ -84,7 +84,7 @@ If[And[z0===0.0||z0===0,x0===0.0||x0===0],result=Hypergeometric2F1[a20,b20,c0,y0
 
 (* When all the arguments are zero*)
 If[And[z0===0.0||z0===0,x0===0.0||x0===0,y0===0.0||y0===0],result=1;Goto[end];];
-
+*)
 
 
 
