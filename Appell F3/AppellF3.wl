@@ -59,9 +59,9 @@ If[Length[para]=!=7,Abort[];];
 
 (* If x=0 or y=0 and other conditions*)
 
-If[para[[-2]]===0.0||para[[-2]]===0,result=Hypergeometric2F1[para[[2]],para[[4]],para[[5]],para[[-1]]];Goto[end];];
+(*If[para[[-2]]===0.0||para[[-2]]===0,result=Hypergeometric2F1[para[[2]],para[[4]],para[[5]],para[[-1]]];Goto[end];];
 If[para[[-1]]===0.0||para[[-1]]===0,result=Hypergeometric2F1[para[[1]],para[[3]],para[[5]],para[[-2]]];Goto[end];];
-
+*)
 
 (*conditions for log cases*)
 
