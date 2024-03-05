@@ -60,7 +60,7 @@ If[Or@@((IntegerQ[#]&&#<=0)&/@(para[[-3;;-3]])),
 Message[F1evaluate::singular];Abort[];];
 
 
-
+(*
 (* If x=0 or y=0*)
 {a0,b0,c0,d0,x0,y0}=para;
 If[x0===0.0||x0===0,result=Hypergeometric2F1[a0,c0,d0,y0];Goto[end];];
@@ -74,7 +74,7 @@ result = Hypergeometric2F1[a0,b0,-c0+d0,x0] Hypergeometric2F1[a0,c0,d0,1];Goto[e
 (*reduction formula*)
 If[x0===y0, If[OptionValue[verbose],PrintTemporary["Evaluating with reduction formula..."];,Nothing[]];
 result = Hypergeometric2F1[a0, b0 + c0, d0, x0];Goto[end];];
-
+*)
 
 {a,b1,b2,c,x,y}=SetPrecision[para,p0];
 
